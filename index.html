@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d1c">
+  <meta name="description" content="CyberStrike: Incident Response Arena is a multiplayer cybersecurity alert triage game.">
+  <title>CyberStrike: Incident Response Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="CyberStrike home"><span class="brand-mark">CS</span><span><strong>CYBERSTRIKE</strong><small>INCIDENT RESPONSE ARENA</small></span></a>
+    <div class="top-status"><span class="pulse"></span> LIVE TRAINING SIMULATION <span class="version">v1.0</span></div>
+  </header>
+  <main id="app">
+    <section id="lobby-screen" class="hero-wrap">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> SECURITY OPERATIONS CENTER // MULTIPLAYER</div>
+        <h1>DETECT. TRIAGE.<br><span>DEFEND. DOMINATE.</span></h1>
+        <p class="hero-sub">A fast-paced incident response arena. Read the signals, prioritize the threat, and make the call before the clock runs out.</p>
+        <div class="feature-row"><span><i class="feature-icon">◈</i> 5 INCIDENT ROUNDS</span><span><i class="feature-icon">⌁</i> 2–8 PLAYERS</span><span><i class="feature-icon">⏱</i> LIVE SCORING</span></div>
+      </div>
+      <div class="join-panel panel">
+        <div class="panel-kicker">MISSION CONTROL <span class="status-dot"></span></div>
+        <h2>Enter the arena</h2>
+        <p class="muted">Create a room and invite your team, or join an active lobby with a code.</p>
+        <label for="player-name">CALLSIGN</label>
+        <input id="player-name" maxlength="20" autocomplete="nickname" placeholder="e.g. PacketPilot" />
+        <button id="create-btn" class="btn btn-primary"><span>＋</span> Create new room</button>
+        <div class="or"><span></span> OR JOIN YOUR SQUAD <span></span></div>
+        <div class="join-row"><input id="room-code-input" maxlength="5" autocomplete="off" placeholder="ROOM CODE" aria-label="Room code" /><button id="join-btn" class="btn btn-secondary">Join room <span>↗</span></button></div>
+        <div id="lobby-error" class="inline-error" role="alert"></div>
+        <div class="security-note"><span>⬡</span> No account required. Use a nickname, not personal information.</div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-1"></div><div class="orbit orbit-2"></div><div class="core-shield"><div class="shield-inner">⌑</div></div><div class="orbit-label label-a">THREAT DETECTED</div><div class="orbit-label label-b">SOC // 24:7</div><div class="orbit-label label-c">SIGNAL: ACTIVE</div></div>
+    </section>
+
+    <section id="room-screen" class="hidden">
+      <div class="room-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> SECURE ROOM // <span id="room-code-display">-----</span></div><h1 id="room-title">Waiting for your squad</h1><p class="muted">Share the room code with your teammates to assemble your response unit.</p></div><button id="leave-btn" class="btn btn-quiet">Leave room ↗</button></div>
+      <div class="game-grid">
+        <section class="panel roster-panel"><div class="section-head"><div><div class="panel-kicker">RESPONSE UNIT</div><h2>Operators <span id="player-count" class="count-badge">1/8</span></h2></div><span class="small-status"><span class="pulse"></span> LOBBY OPEN</span></div><div id="players-list" class="players-list"></div><div id="host-controls" class="host-controls"><button id="start-btn" class="btn btn-primary btn-wide">Launch operation <span>→</span></button><p class="hint">Minimum 2 players required. Host controls the game flow.</p></div><div id="waiting-host" class="hidden waiting-note">Waiting for the host to launch the operation…</div></section>
+        <section class="panel briefing-panel"><div class="panel-kicker">MISSION BRIEFING</div><h2>Five rounds. One winning team member.</h2><p class="muted">Each alert challenges your ability to assess severity, choose a response priority, and take the right containment action.</p><div class="round-list"><div><span class="round-number">01</span><span><strong>Phishing & social engineering</strong><small>Spot the lure before credentials fall.</small></span><span class="round-check">◈</span></div><div><span class="round-number">02</span><span><strong>Endpoint threats</strong><small>Contain suspicious behavior.</small></span><span class="round-check">◈</span></div><div><span class="round-number">03</span><span><strong>Identity & access</strong><small>Protect accounts and privileges.</small></span><span class="round-check">◈</span></div><div><span class="round-number">04</span><span><strong>Network & data loss</strong><small>Stop suspicious data movement.</small></span><span class="round-check">◈</span></div><div><span class="round-number">05</span><span><strong>Final showdown</strong><small>Coordinate a multi-signal response.</small></span><span class="round-check">◈</span></div></div></section>
+      </div>
+    </section>
+
+    <section id="game-screen" class="hidden">
+      <div class="game-topline"><div><div class="eyebrow"><span class="eyebrow-line"></span> LIVE INCIDENT // <span id="round-label">ROUND 01 OF 05</span></div><h1 id="round-name">Phishing & social engineering</h1></div><div class="timer-box"><span class="timer-label">TIME REMAINING</span><strong id="timer">00:45</strong><div class="timer-track"><span id="timer-bar"></span></div></div></div>
+      <div class="progress-track" id="round-progress"></div>
+      <div class="game-layout">
+        <section class="panel incident-panel"><div class="incident-meta"><span id="incident-category" class="category-pill">PHISHING / SOCIAL ENGINEERING</span><span class="live-badge"><span class="pulse"></span> LIVE ALERT</span></div><div class="alert-icon">!</div><h2 id="incident-title">Urgent payroll reset</h2><p id="incident-story" class="incident-story"></p><div class="evidence-title">OBSERVED INDICATORS</div><ul id="evidence-list" class="evidence-list"></ul><div class="incident-footer"><span>CASE ID <strong id="case-id">CS-000</strong></span><span>SIMULATED ALERT // TRAINING ONLY</span></div></section>
+        <section class="panel answer-panel"><div class="panel-kicker">YOUR TRIAGE DECISION</div><h2>Make the call</h2><p class="muted">Choose one answer in each category. Submit once per incident.</p><form id="answer-form">
+          <fieldset><legend><span class="step-num">01</span> Severity assessment</legend><div class="option-grid severity-options"><label class="option"><input type="radio" name="severity" value="low" required><span class="option-card"><i class="severity-dot sev-low"></i><strong>Low</strong><small>Limited impact</small></span></label><label class="option"><input type="radio" name="severity" value="medium"><span class="option-card"><i class="severity-dot sev-medium"></i><strong>Medium</strong><small>Needs review</small></span></label><label class="option"><input type="radio" name="severity" value="high"><span class="option-card"><i class="severity-dot sev-high"></i><strong>High</strong><small>Urgent response</small></span></label><label class="option"><input type="radio" name="severity" value="critical"><span class="option-card"><i class="severity-dot sev-critical"></i><strong>Critical</strong><small>Active major threat</small></span></label></div></fieldset>
+          <fieldset><legend><span class="step-num">02</span> Response priority</legend><div class="option-grid priority-options"><label class="option"><input type="radio" name="priority" value="P1" required><span class="option-card"><strong>P1</strong><small>Immediate</small></span></label><label class="option"><input type="radio" name="priority" value="P2"><span class="option-card"><strong>P2</strong><small>High priority</small></span></label><label class="option"><input type="radio" name="priority" value="P3"><span class="option-card"><strong>P3</strong><small>Routine</small></span></label></div></fieldset>
+          <fieldset><legend><span class="step-num">03</span> First response action</legend><select id="action-select" name="action" required><option value="">Select the best first action…</option><option value="quarantine">Quarantine phishing message and block indicators</option><option value="isolate-email">Hold email and verify sender safely</option><option value="isolate-host">Isolate affected endpoint</option><option value="review-alert">Review alert and validate software source</option><option value="disable-account">Disable/restrict account and revoke sessions</option><option value="rate-limit">Rate-limit source and validate activity</option><option value="contain-egress">Contain suspicious outbound connection</option><option value="validate-source">Validate authorized scanner/source</option><option value="incident-command">Activate incident command and coordinate containment</option><option value="investigate-change">Correlate with change and investigate configuration</option></select></fieldset>
+          <div class="score-preview"><span>MAXIMUM AVAILABLE</span><strong>400 <small>PTS</small></strong></div><button id="submit-btn" type="submit" class="btn btn-primary btn-wide">Submit triage decision <span>→</span></button><p class="hint">Scoring: severity 100 · priority 100 · action 150 · speed bonus up to 50.</p><div id="answer-status" role="status" class="answer-status"></div>
+        </form></section>
+      </div>
+      <div class="lower-grid"><section class="panel leaderboard-panel"><div class="section-head"><div><div class="panel-kicker">LIVE RANKINGS</div><h2>Leaderboard</h2></div><span class="small-status">POINTS</span></div><div id="leaderboard-list" class="leaderboard-list"></div></section><section class="panel"><div class="panel-kicker">RESPONSE PROTOCOL</div><h2>Think like an incident responder</h2><div class="protocol-list"><p><span>01</span> Assess impact and scope before choosing severity.</p><p><span>02</span> Prioritize active threats and potential spread.</p><p><span>03</span> Contain safely, preserve evidence, communicate.</p></div></section></div>
+    </section>
+
+    <section id="results-screen" class="hidden">
+      <div class="results-hero"><div class="eyebrow"><span class="eyebrow-line"></span> OPERATION COMPLETE</div><h1 id="results-title">Mission debrief</h1><p class="muted">Review the calls, learn from the signals, and see who led the response.</p></div>
+      <div class="results-layout"><section class="panel final-score-panel"><div class="panel-kicker">FINAL STANDINGS</div><div id="final-leaderboard" class="leaderboard-list"></div><button id="back-lobby-btn" class="btn btn-primary btn-wide">Return to room <span>→</span></button></section><section class="panel debrief-panel"><div class="panel-kicker">INCIDENT DEBRIEF</div><div id="debrief-list"></div></section></div>
+    </section>
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+  </main>
+  <footer><span>CYBERSTRIKE // INCIDENT RESPONSE ARENA</span><span>FICTIONAL SCENARIOS · TRAINING SIMULATION ONLY</span></footer>
+  <script src="/socket.io/socket.io.js"></script><script src="/client.js"></script>
+</body>
+</html>
