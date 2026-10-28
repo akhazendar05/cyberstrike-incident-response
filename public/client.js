@@ -118,6 +118,11 @@
   $("join-btn").addEventListener("click", () => { $("lobby-error").textContent=""; socket.emit("join-room",{name:nameInput.value,code:$("room-code-input").value}); });
   $("room-code-input").addEventListener("input", e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5);});
   $("start-btn").addEventListener("click",()=>socket.emit("start-game"));
+  
+$("add-bots-btn").addEventListener("click", () => {
+  $("add-bots-btn").disabled = true;
+  socket.emit("add-bots");
+});
   $("leave-btn").addEventListener("click",()=>{socket.emit("leave-room");clearInterval(timerInterval);currentState=null;lastIncidentId="";$("submit-btn").classList.remove("hidden");$("answer-form").querySelectorAll("fieldset, .score-preview, .hint").forEach(el=>el.classList.remove("hidden"));const a=document.getElementById("advance-btn");if(a)a.remove();showScreen("lobby-screen");});
   $("back-lobby-btn").addEventListener("click",()=>{showScreen("room-screen");showToast("The game has finished. Create a new room to play again.");});
   $("answer-form").addEventListener("submit",e=>{
