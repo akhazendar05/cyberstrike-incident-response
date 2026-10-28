@@ -216,6 +216,51 @@ io.on("connection", socket => {
     const result = advance(room);
     if (!result.ok) return emitError(socket, result.message);
   });
+
+socket.on("add-bots", () => {
+  const room = getRoomForSocket(socket);
+
+  if (!room) {
+    return emitError(socket, "Join a room first.");
+  }
+
+  if (socket.id !== room.hostId) {
+    return emitError(socket, "Only the host can add bots.");
+  }
+
+  if (room.status !== "lobby") {
+    return emitError(socket, "Bots can only be added before the game starts.");
+  }
+
+  if (room.players.size + 3 > MAX_PLAYERS) {
+    return emitError(socket, "Not enough room for three bots. Maximum is 8 players.");
+  }
+
+  if ([...room.players.values()].some(p => p.isBot)) {
+    return emitError(socket, "Bots have already been added to this room.");
+  }
+
+  const bots = [
+    { name: "Bot Alpha", difficulty: "Easy" },
+    { name: "Bot Bravo", difficulty: "Medium" },
+    { name: "Bot Charlie", difficulty: "Hard" }
+  ];
+
+  bots.forEach((bot, index) => {
+    const id = `bot-${room.code}-${index + 1}`;
+
+    room.players.set(id, {
+      id,
+      name: bot.name,
+      score: 0,
+      connected: true,
+      isBot: true,
+      difficulty: bot.difficulty
+    });
+  });
+
+  broadcast(room);
+});
   socket.on("submit-answer", (answer = {}) => {
     const room = getRoomForSocket(socket);
     if (!room || room.status !== "playing") return emitError(socket, "There is no active incident to answer.");
